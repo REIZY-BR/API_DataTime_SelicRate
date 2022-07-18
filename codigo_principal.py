@@ -20,9 +20,9 @@ while True:
     else:
         print("\033[31mInvalid frequency, please try again!\033[m")
 print("Program Finalized!")
-# better_period(raw, start_date=poli_data("2000-01-01"), end_date=poli_data("2022-03-31"))
+better_period(raw, start_date=poli_data("2000-01-01"), end_date=poli_data("2022-03-31"))
 
-predict_rate(raw, '2024-12-30', 300.00)
+first_day, media_period, period_percent = media_rate(raw)
 
 
 

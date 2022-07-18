@@ -166,13 +166,47 @@ def better_period(raw_data, start_date, end_date, amount_exemple=657.43):
     print(better)
 # the best period was between 2001-10-26 / 2003-10-22
 
+
+def calc_percent(first_value, last_value):
+    percent = ((last_value / first_value) - 1) * 100
+    return round(percent)
+
+
 #{"data":"01/07/2022","valor":"0.049037"}
-def predict_rate(raw_data, future_end_date, capital):
-    media_rate = 0
+def media_rate(raw_data):
+    media = 0
     invert_raw_data = raw_data[::-1]
-    for item in range(0, 180):
-        media_rate += float(invert_raw_data[item]["valor"])
-    media_rate = round((media_rate/180), 6) #0.038733
+    first_rate = float(invert_raw_data[0]["valor"])
+    change_day = 0
+    list_frequency_days = list()
+    list_peridod_rate = list()
+    for indice, item in enumerate(invert_raw_data):
+        current_rate = float(item["valor"])
+        media += current_rate
+        if indice >= 100:
+            break
+        else:
+            if first_rate == current_rate:
+                change_day += 1
+            else:
+                period_percent = calc_percent(first_value=current_rate, last_value=first_rate)
+                list_peridod_rate.append(period_percent)
+                list_frequency_days.append(change_day)
+                first_rate = current_rate
+                change_day = 0
+    media = round((media/100), 6)
+    del list_frequency_days[0]
+    list_frequency_days.pop()
+    del list_peridod_rate[0]
+    list_peridod_rate.pop()
+    media_change_days = sum(list_frequency_days) / len(list_frequency_days)
+    media_change_days = round(media_change_days)
+    media_rate_period = sum(list_peridod_rate) / len(list_peridod_rate)
+    return media, media_change_days, media_rate_period
+
+
+
+
 
 
 
