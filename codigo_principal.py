@@ -20,9 +20,19 @@ while True:
     else:
         print("\033[31mInvalid frequency, please try again!\033[m")
 print("Program Finalized!")
-better_period(raw, start_date=poli_data("2000-01-01"), end_date=poli_data("2022-03-31"))
-
-first_day, media_period, period_percent = media_rate(raw)
-
+while True:
+    decision = str(input("Want to see the best period[bp] or next 100 average media day[md]?\n [0] to finalize: ")).lower()
+    if decision == "0":
+        break
+    if decision == "bp":
+        better_period(raw, start_date=poli_data("2000-01-01"), end_date=poli_data("2022-03-31"))
+    elif decision == "md":
+        first_day, media_period, period_percent = media_rate(raw)
+        new_period = predict_rate(first_day, media_period, period_percent)
+        for key, value in enumerate(new_period):
+            print(value)
+    else:
+        print("\033[31mInvalid choice, please try again!\033[m")
+print("Program Finalized!")
 
 
